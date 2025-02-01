@@ -1,7 +1,7 @@
-// ColonyForm.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getColony, saveColony } from '../../../services/api'; // Import functions from api.js
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ColonyForm = ({ token }) => {
   const { id } = useParams();
@@ -68,55 +68,52 @@ const ColonyForm = ({ token }) => {
   };
 
   return (
-    <div>
-      <h2>{colonyId ? 'Edit Colony' : 'Add Colony'}</h2>
+    <div className="container my-5">
+      <h2 className="mb-4">{colonyId ? 'Edit Colony' : 'Add Colony'}</h2>
       <form onSubmit={handleSubmit}>
-        {/* Form fields */}
-        <div>
-          <label htmlFor="nazwa">Colony Name:</label>
-          <input type="text" id="nazwa" name="nazwa" value={formData.nazwa} onChange={handleChange} required />
+        {/* Form fields with Bootstrap styling */}
+        <div className="mb-3">
+          <label htmlFor="nazwa" className="form-label">Colony Name:</label>
+          <input type="text" id="nazwa" name="nazwa" className="form-control" value={formData.nazwa} onChange={handleChange} required />
         </div>
-        <div>
-          <label htmlFor="trasaWedrowna">Trasa Wędrowna:</label>
-          <input type="text" id="trasaWedrowna" name="trasaWedrowna" value={formData.trasaWedrowna} onChange={handleChange} />
+        <div className="mb-3">
+          <label htmlFor="trasaWedrowna" className="form-label">Trasa Wędrowna:</label>
+          <input type="text" id="trasaWedrowna" name="trasaWedrowna" className="form-control" value={formData.trasaWedrowna} onChange={handleChange} />
         </div>
-        <div>
-          <label htmlFor="opis">Opis:</label>
-          <textarea id="opis" name="opis" value={formData.opis} onChange={handleChange} required />
+        <div className="mb-3">
+          <label htmlFor="opis" className="form-label">Opis:</label>
+          <textarea id="opis" name="opis" className="form-control" value={formData.opis} onChange={handleChange} required />
         </div>
-        <div>
-          <label htmlFor="cena">Cena:</label>
-          <input type="number" id="cena" name="cena" value={formData.cena} onChange={handleChange} required />
+        <div className="mb-3">
+          <label htmlFor="cena" className="form-label">Cena:</label>
+          <input type="number" id="cena" name="cena" className="form-control" value={formData.cena} onChange={handleChange} required />
         </div>
-        <div>
-          <label htmlFor="kraj">Kraj:</label>
-          <input type="text" id="kraj" name="kraj" value={formData.kraj} onChange={handleChange} required />
+        <div className="mb-3">
+          <label htmlFor="kraj" className="form-label">Kraj:</label>
+          <input type="text" id="kraj" name="kraj" className="form-control" value={formData.kraj} onChange={handleChange} required />
         </div>
-        <div>
-          <label htmlFor="terminOd">Termin Od:</label>
-          <input type="datetime-local" id="terminOd" name="terminOd" value={formData.terminOd} onChange={handleChange} required />
+        <div className="mb-3">
+          <label htmlFor="terminOd" className="form-label">Termin Od:</label>
+          <input type="datetime-local" id="terminOd" name="terminOd" className="form-control" value={formData.terminOd} onChange={handleChange} required />
         </div>
-        <div>
-          <label htmlFor="terminDo">Termin Do:</label>
-          <input type="datetime-local" id="terminDo" name="terminDo" value={formData.terminDo} onChange={handleChange} required />
+        <div className="mb-3">
+          <label htmlFor="terminDo" className="form-label">Termin Do:</label>
+          <input type="datetime-local" id="terminDo" name="terminDo" className="form-control" value={formData.terminDo} onChange={handleChange} required />
         </div>
-        <div>
-          <label htmlFor="firmaId">Firma ID:</label>
-          <input type="number" id="firmaId" name="firmaId" value={formData.firmaId} onChange={handleChange} required />
+        <div className="mb-3">
+          <label htmlFor="firmaId" className="form-label">Firma ID:</label>
+          <input type="number" id="firmaId" name="firmaId" className="form-control" value={formData.firmaId} onChange={handleChange} required />
         </div>
-        <div>
-          <label htmlFor="adresId">Adres ID:</label>
-          <input type="number" id="adresId" name="adresId" value={formData.adresId} onChange={handleChange} required />
+        <div className="mb-3">
+          <label htmlFor="adresId" className="form-label">Adres ID:</label>
+          <input type="number" id="adresId" name="adresId" className="form-control" value={formData.adresId} onChange={handleChange} required />
         </div>
-        <div>
-          <label htmlFor="formaId">Forma ID:</label>
-          <input type="number" id="formaId" name="formaId" value={formData.formaId} onChange={handleChange} required />
+        <div className="mb-3">
+          <label htmlFor="formaId" className="form-label">Forma ID:</label>
+          <input type="number" id="formaId" name="formaId" className="form-control" value={formData.formaId} onChange={handleChange} required />
         </div>
-        
-     
-    
-        {/* Repeat for other fields */}
-        <button type="submit" disabled={isLoading}>
+
+        <button type="submit" className="btn btn-primary" disabled={isLoading}>
           {isLoading ? 'Saving...' : colonyId ? 'Save Changes' : 'Add Colony'}
         </button>
       </form>
