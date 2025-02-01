@@ -42,6 +42,7 @@ function App() {
         <Route path="/admin/colonies" element={<PrivateRoute allowedRoles={["Administrator"]}><AdminColonyList /></PrivateRoute>} />
         <Route path="/admin/colony/:id" element={<PrivateRoute allowedRoles={["Administrator"]}><KoloniaDetails /></PrivateRoute>} /> 
         <Route path="/admin/colonies/add" element={<PrivateRoute allowedRoles={["Administrator"]}><AddEditColony /></PrivateRoute>} />
+        <Route path="/admin/colonies/edit/:id" element={<PrivateRoute allowedRoles={["Administrator"]}><AddEditColony /></PrivateRoute>} />
         <Route path="/admin/payments" element={<PrivateRoute allowedRoles={["Administrator"]}><PaymentDashboard /></PrivateRoute>} />
 
         {/* Fallback */}

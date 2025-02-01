@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { fetchAllKolonie } from "../../../services/api"; // Import funkcji API
 import { Table, Button, Spinner, Alert, Badge } from "react-bootstrap";
+import { Navigate, useNavigate  } from 'react-router-dom';
 
 const AdminColonyList = ({ token }) => {
   const [kolonie, setKolonie] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadKolonie = async () => {
@@ -34,6 +36,10 @@ const AdminColonyList = ({ token }) => {
 
     return <Badge bg="success">Trwa</Badge>;
   };
+  const handleEdit = (idKolonii) => {
+    console.log(idKolonii);
+    navigate(`/admin/colonies/edit/${idKolonii}`); // Przekierowanie do strony edycji
+  };
 
   if (loading) return <Spinner animation="border" />;
   if (error) return <Alert variant="danger">{error}</Alert>;
@@ -41,7 +47,7 @@ const AdminColonyList = ({ token }) => {
   return (
     <div className="container mt-4">
       <h2>Lista Kolonii (Admin)</h2>
-      <Button variant="primary" className="mb-3">Dodaj Kolonię</Button>
+      <Button variant="primary" className="mb-3" onClick={() => navigate("/admin/colonies/add")}>Dodaj Kolonię</Button>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -63,7 +69,7 @@ const AdminColonyList = ({ token }) => {
                 <td>{kolonia.terminDo}</td>
                 <td>{getStatusLabel(kolonia.terminOd, kolonia.terminDo)}</td>
                 <td>
-                  <Button variant="info" size="sm" className="me-2">
+                  <Button variant="info" size="sm" className="me-2" onClick={() => handleEdit(kolonia.id)}>
                     Edytuj
                   </Button>
                   <Button variant="danger" size="sm">

@@ -1,23 +1,7 @@
 import axios from 'axios';
 
 const API_URL = 'https://localhost:7290/api';
-
-// export const getChildrenByParent = async (idRodzica, token) => {
-//   try {
-//     const response = await axios.get(`${API_URL}/KoloniaDziecko/dzieci/${idRodzica}`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         Accept: '*/*',
-//       },
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error('Błąd pobierania listy dzieci:', error);
-//     return [];
-//   }
-// };
-
-
+const token = localStorage.getItem('token');
 
 // 🏕 Pobranie wszystkich kolonii (przeszłe + przyszłe)
 export const fetchAllKolonie = async (token) => {
@@ -82,6 +66,67 @@ export const fetchKoloniaDetails = async (id, token) => {
   }
 };
 
+// 🏕 Dodawanie kolonii
+export const addColony = async (colonyData, token) => {
+  try {
+    const response = await fetch(`${API_URL}/Kolonia`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(colonyData),
+    });
+
+    if (!response.ok) throw new Error("Błąd podczas dodawania kolonii");
+    return await response.json();
+  } catch (error) {
+    console.error("Błąd:", error.message);
+    throw error;
+  }
+};
+
+// 🏕 Edytowanie kolonii
+export const updateColony = async (id, updatedData, token) => {
+  try {
+    const response = await fetch(`${API_URL}/Kolonia/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) throw new Error("Błąd podczas edytowania kolonii");
+    return await response.json();
+  } catch (error) {
+    console.error("Błąd:", error.message);
+    throw error;
+  }
+};
+
+// 🏕 Usuwanie kolonii
+export const deleteColony = async (id, token) => {
+  try {
+    const response = await fetch(`${API_URL}/Kolonia/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) throw new Error("Błąd podczas usuwania kolonii");
+    return await response.json();
+  } catch (error) {
+    console.error("Błąd:", error.message);
+    throw error;
+  }
+};
+
 // 🏕 Pobranie wszystkich grup (ADMIN)
 export const fetchGrupy = async (token) => {
   try {
@@ -131,6 +176,33 @@ export const fetchGrupyWolneMiejsca = async (koloniaId, token) => {
   }
 };
 
+export const getColony = async (colonyId, token) => {
+  try {
+    const response = await axios.get(`${API_URL}/Kolonia/${colonyId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching colony:', error);
+    throw error;
+  }
+};
 
+export const saveColony = async (colonyData, token, colonyId = null) => {
+  try {
+    const url = colonyId ? `${API_URL}/Kolonia/${colonyId}` : `${API_URL}/Kolonia`;
+    const method = colonyId ? 'put' : 'post';
 
-  
+    const response = await axios({
+      method: method,
+      url: url,
+      headers: { Authorization: `Bearer ${token}` },
+      data: colonyData,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error saving colony:', error);
+    throw error;
+  }
+};
